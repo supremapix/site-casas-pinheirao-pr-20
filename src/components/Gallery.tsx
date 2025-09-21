@@ -99,12 +99,12 @@ const Gallery = () => {
                   </Badge>
                 </div>
                 <div className="absolute top-4 right-4">
-                  <Button className="bg-green-500 text-white hover:bg-green-600 animate-pulse shadow-lg" size="sm" asChild>
-                    <a href={getWhatsappLink(house)} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-1">
-                      <DollarSign className="h-4 w-4" />
-                      <span className="text-xs font-bold">Consulte M² na sua região</span>
-                    </a>
-                  </Button>
+                  <div className="bg-primary/90 text-primary-foreground px-3 py-2 rounded-lg shadow-lg">
+                    <p className="text-xs font-medium text-center">
+                      Gostou desse projeto?<br />
+                      <span className="font-bold">Entre em contato!</span>
+                    </p>
+                  </div>
                 </div>
               </div>
               
