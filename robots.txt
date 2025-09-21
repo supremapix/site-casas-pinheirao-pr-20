@@ -1,0 +1,83 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://casaspinheirao.site/parana/sitemap.xml
+
+# Páginas importantes para indexação
+Allow: /parana/
+Allow: /parana/#about
+Allow: /parana/#services
+Allow: /parana/#gallery
+Allow: /parana/#contact
+Allow: /parana/#faq
+
+# Páginas de produtos
+Allow: /parana/casas-madeira-pinus
+Allow: /parana/casas-alvenaria
+Allow: /parana/casas-praia
+Allow: /parana/projetos-personalizados
+
+# Páginas de localização
+Allow: /parana/curitiba
+Allow: /parana/pinhais
+Allow: /parana/regiao-metropolitana
+
+# Páginas comerciais
+Allow: /parana/precos-metro-quadrado
+Allow: /parana/financiamento
+Allow: /parana/orcamento
+
+# Bloquear arquivos desnecessários
+Disallow: /assets/
+Disallow: /*.css$
+Disallow: /*.js$
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+Disallow: /backup/
+
+# Permitir acesso aos assets importantes para SEO
+Allow: /assets/images/logo-casas-pinheirao.png
+Allow: /assets/images/selo-qualidade.jpg
+Allow: /assets/images/galeria/
+
+# Crawl-delay para não sobrecarregar o servidor
+Crawl-delay: 1
+
+# Configurações específicas para diferentes bots
+
+# Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Facebook (para Open Graph)
+User-agent: facebookexternalhit
+Allow: /
+
+# WhatsApp (para preview de links)
+User-agent: WhatsApp
+Allow: /
+
+# Bloquear bots maliciosos
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Informações adicionais
+# Site: Casas Pré-Fabricadas Curitiba Paraná - Casas Pinheirão
+# Contato: casaspinheirao@casaspinheirao.com.br
+# Telefone: (41) 3667-8015
+# WhatsApp: (41) 99630-1028
+
