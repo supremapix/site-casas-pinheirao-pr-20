@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Phone, MessageCircle, Mail, MapPin, Home, Shield, Clock, Star, Menu, X, ArrowRight, CheckCircle } from "lucide-react";
+import { housesSimplified, formatPrice } from '@/data/houses';
 
 const NewLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,39 +26,6 @@ const NewLayout = () => {
     }
     setIsMenuOpen(false);
   };
-
-  const houses = [
-    {
-      id: 1,
-      name: "Casa Econômica",
-      area: "45m²",
-      bedrooms: 2,
-      bathrooms: 1,
-      image: "/assets/images/galeria/casa1.png",
-      features: ["Sala integrada", "Cozinha americana", "Área de serviço"],
-      highlight: "Perfeita para começar"
-    },
-    {
-      id: 2,
-      name: "Casa Familiar",
-      area: "70m²",
-      bedrooms: 3,
-      bathrooms: 2,
-      image: "/assets/images/galeria/casa2.png",
-      features: ["3 quartos", "Varanda", "Cozinha planejada"],
-      highlight: "Ideal para famílias"
-    },
-    {
-      id: 3,
-      name: "Casa Premium",
-      area: "90m²",
-      bedrooms: 3,
-      bathrooms: 2,
-      image: "/assets/images/galeria/casa3.png",
-      features: ["Suíte master", "Varanda gourmet", "Garagem"],
-      highlight: "Máximo conforto"
-    }
-  ];
 
   const faqs = [
     {
@@ -257,7 +225,7 @@ const NewLayout = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {houses.map((house) => (
+            {housesSimplified.map((house) => (
               <Card key={house.id} className="border-0 shadow-xl bg-white hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden group">
                 <div className="relative">
                   <img 
@@ -285,7 +253,7 @@ const NewLayout = () => {
                 </div>
                 <CardContent className="p-6">
                   <h3 className="text-2xl font-bold text-gray-800 mb-2">{house.name}</h3>
-                  <div className="flex items-center space-x-4 text-gray-600 mb-4">
+                  <div className="flex items-center space-x-4 text-gray-600 mb-2">
                     <span className="flex items-center">
                       <Home className="w-4 h-4 mr-1" />
                       {house.area}
@@ -293,6 +261,21 @@ const NewLayout = () => {
                     <span>{house.bedrooms} quartos</span>
                     <span>{house.bathrooms} banheiro{house.bathrooms > 1 ? 's' : ''}</span>
                   </div>
+                  
+                  {house.price && (
+                    <div className="mb-4 py-3 px-4 bg-blue-50 rounded-lg">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-2xl font-bold text-blue-600">{formatPrice(house.price)}</span>
+                        {house.oldPrice && (
+                          <span className="text-sm text-gray-500 line-through">
+                            {formatPrice(house.oldPrice)}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-gray-600 mt-1">* Inclui estrutura e montagem</p>
+                    </div>
+                  )}
+
                   <div className="space-y-2">
                     {house.features.map((feature, index) => (
                       <div key={index} className="flex items-center text-gray-700">

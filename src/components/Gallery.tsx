@@ -1,74 +1,18 @@
-
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { MessageCircle, Eye, DollarSign } from 'lucide-react';
+import { houses, formatPrice, type HouseData } from '@/data/houses';
 
 const Gallery = () => {
-  console.log('Gallery NOVA VERSÃO COM BOTÃO VERDE:', new Date().toLocaleTimeString());
-  const [selectedHouse, setSelectedHouse] = useState<any>(null);
+  console.log('Gallery CARREGANDO DADOS CENTRALIZADOS:', new Date().toLocaleTimeString());
+  const [selectedHouse, setSelectedHouse] = useState<HouseData | null>(null);
 
-  const houses = [
-    {
-      id: 1,
-      name: "Casa Modelo Pinheiral 75m²",
-      image: "/assets/images/galeria/casa1.png",
-      area: "75m²",
-      rooms: "2 quartos, sala, cozinha, banheiro",
-      features: ["Estrutura de madeira", "Cobertura colonial", "Instalações inclusas"],
-      description: "Casa completa de 75m² com estrutura de madeira tratada, ideal para famílias pequenas. Inclui toda infraestrutura elétrica e hidráulica."
-    },
-    {
-      id: 2,
-      name: "Casa Modelo Tradicional 90m²",
-      image: "/assets/images/galeria/casa2.png",
-      area: "90m²",
-      rooms: "3 quartos, sala, cozinha, 2 banheiros",
-      features: ["Alvenaria", "Telhado cerâmico", "Churrasqueira"],
-      description: "Casa em alvenaria de 90m² com acabamento completo, churrasqueira e área de serviço independente."
-    },
-    {
-      id: 3,
-      name: "Casa Modelo Executiva 120m²",
-      image: "/assets/images/galeria/casa3.png",
-      area: "120m²",
-      rooms: "3 quartos, 2 salas, cozinha, 2 banheiros",
-      features: ["Estrutura mista", "Varanda", "Garagem"],
-      description: "Casa executiva de 120m² com varanda, garagem coberta e acabamentos de primeira qualidade."
-    },
-    {
-      id: 4,
-      name: "Casa Modelo Compacta 60m²",
-      image: "/assets/images/galeria/casa4.png",
-      area: "60m²",
-      rooms: "2 quartos, sala, cozinha, banheiro",
-      features: ["Madeira tratada", "Compacta", "Pronta entrega"],
-      description: "Casa compacta ideal para casais ou início de família. Estrutura otimizada e funcional."
-    },
-    {
-      id: 5,
-      name: "Casa Modelo Família 110m²",
-      image: "/assets/images/galeria/casa5.png",
-      area: "110m²",
-      rooms: "3 quartos, sala, cozinha, 2 banheiros",
-      features: ["Alvenaria", "Área gourmet", "Lavanderia"],
-      description: "Casa espaçosa com área gourmet integrada, perfeita para momentos em família."
-    },
-    {
-      id: 6,
-      name: "Casa Modelo Premium 150m²",
-      image: "/assets/images/galeria/casa6.png",
-      area: "150m²",
-      rooms: "4 quartos, 2 salas, cozinha, 3 banheiros",
-      features: ["Estrutura premium", "Suíte master", "Varanda gourmet"],
-      description: "Casa premium com suíte master, closet e varanda gourmet com churrasqueira integrada."
-    }
-  ];
-
-  const getWhatsappLink = (house: any) => {
-    const message = `Olá eu vi seu site: ${house.name} e gostaria de saber mais!`;
+  const getWhatsappLink = (house: HouseData) => {
+    const priceInfo = house.price ? ` - Valor: ${formatPrice(house.price)}` : '';
+    const message = `Olá! Vi no site a ${house.name}${priceInfo} e gostaria de saber mais informações!`;
     return `https://wa.me/5541996301028?text=${encodeURIComponent(message)}`;
   };
 
@@ -113,9 +57,23 @@ const Gallery = () => {
                   {house.name}
                 </h3>
                 
-                <p className="text-muted-foreground mb-4">
+                <p className="text-muted-foreground mb-2">
                   {house.rooms}
                 </p>
+
+                {house.price && (
+                  <div className="mb-4">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-2xl font-bold text-primary">{formatPrice(house.price)}</span>
+                      {house.oldPrice && (
+                        <span className="text-sm text-muted-foreground line-through">
+                          {formatPrice(house.oldPrice)}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">* Valor inclui estrutura e montagem básica</p>
+                  </div>
+                )}
 
                 <div className="flex flex-wrap gap-2 mb-4">
                   {house.features.slice(0, 2).map((feature, index) => (
@@ -181,6 +139,19 @@ const Gallery = () => {
                         <span>Cômodos:</span>
                         <span className="font-semibold">{selectedHouse.rooms}</span>
                       </div>
+                      {selectedHouse.price && (
+                        <div className="flex justify-between pt-2 border-t">
+                          <span>Valor:</span>
+                          <div className="text-right">
+                            <div className="font-bold text-primary">{formatPrice(selectedHouse.price)}</div>
+                            {selectedHouse.oldPrice && (
+                              <div className="text-xs text-muted-foreground line-through">
+                                {formatPrice(selectedHouse.oldPrice)}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                   
