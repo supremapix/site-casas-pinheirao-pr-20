@@ -1,36 +1,10 @@
-
-import { Clock, Gift, MessageCircle, Star } from 'lucide-react';
+import { Clock, Gift, MessageCircle, Star, TrendingDown } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { promotions, formatPrice, calculateDiscount } from '@/data/houses';
 
 const Promotions = () => {
-  const promotions = [
-    {
-      id: 1,
-      title: "Super Promoção Casa 75m²",
-      features: ["2 quartos + sala + cozinha + banheiro", "Estrutura de madeira tratada", "Instalações elétricas e hidráulicas", "Montagem inclusa"],
-      highlight: "Mais vendida",
-      deadline: "Válida até 31/12/2024",
-      whatsappMessage: "Olá! Tenho interesse na promoção da Casa 75m². Gostaria de mais detalhes."
-    },
-    {
-      id: 2,
-      title: "Oferta Especial Casa Alvenaria 90m²",
-      features: ["3 quartos + 2 banheiros + área gourmet", "Construção em alvenaria", "Churrasqueira inclusa", "Pintura completa"],
-      highlight: "Promoção especial",
-      deadline: "Últimas unidades",
-      whatsappMessage: "Olá! Quero saber mais sobre a oferta da Casa Alvenaria 90m²."
-    },
-    {
-      id: 3,
-      title: "Casa Compacta 60m² - Pronta Entrega",
-      features: ["2 quartos + sala + cozinha + banheiro", "Ideal para casais", "Entrega em 30 dias", "Financiamento facilitado"],
-      highlight: "Pronta entrega",
-      deadline: "Oferta relâmpago",
-      whatsappMessage: "Olá! Gostaria de informações sobre a Casa Compacta 60m² em promoção."
-    }
-  ];
 
   const getWhatsappLink = (message: string) => {
     return `https://wa.me/5541996301028?text=${encodeURIComponent(message)}`;
@@ -65,15 +39,37 @@ const Promotions = () => {
                   {promo.title}
                 </CardTitle>
                 
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center justify-between">
                   <div className="flex items-center text-sm text-muted-foreground">
                     <Clock className="h-4 w-4 mr-1" />
                     {promo.deadline}
                   </div>
+                  {promo.price && promo.oldPrice && (
+                    <Badge variant="destructive" className="flex items-center gap-1">
+                      <TrendingDown className="h-3 w-3" />
+                      -{calculateDiscount(promo.oldPrice, promo.price)}%
+                    </Badge>
+                  )}
                 </div>
               </CardHeader>
 
               <CardContent className="space-y-6">
+                {/* Preço */}
+                {promo.price && (
+                  <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-lg p-4 border border-primary/20">
+                    <p className="text-xs text-muted-foreground mb-1">Valor promocional</p>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-3xl font-bold text-primary">{formatPrice(promo.price)}</span>
+                      {promo.oldPrice && (
+                        <span className="text-sm text-muted-foreground line-through">
+                          {formatPrice(promo.oldPrice)}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">ou condições especiais via WhatsApp</p>
+                  </div>
+                )}
+
                 {/* Características */}
                 <div>
                   <h4 className="font-semibold mb-3 text-foreground">Incluso nesta promoção:</h4>
