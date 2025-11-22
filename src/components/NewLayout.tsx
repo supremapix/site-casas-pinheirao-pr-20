@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Phone, MessageCircle, Mail, MapPin, Home, Shield, Clock, Star, Menu, X, ArrowRight, CheckCircle } from "lucide-react";
 import { housesSimplified, formatPrice } from '@/data/houses';
+import { getAllCities, getAllNeighborhoods } from '@/data/locations';
 
 const NewLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -298,6 +300,89 @@ const NewLayout = () => {
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="w-5 h-5 mr-2" />
                 Ver Todos os Modelos
+              </a>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Seção de Cidades e Bairros */}
+      <section className="py-20 px-6 bg-gradient-to-br from-primary/5 to-green-50">
+        <div className="container mx-auto">
+          <div className="text-center mb-16">
+            <Badge className="bg-primary text-white mb-4">
+              Atendemos Toda a Região
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+              Casas Pré-Fabricadas em Sua Cidade
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Levamos qualidade e conforto para toda a Região Metropolitana de Curitiba
+            </p>
+          </div>
+
+          {/* Cidades */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-bold text-gray-800 mb-8 text-center">
+              Cidades Atendidas
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-7xl mx-auto">
+              {getAllCities().map((city) => (
+                <Link
+                  key={city.slug}
+                  to={`/${city.slug}`}
+                  className="group"
+                >
+                  <Button
+                    variant="outline"
+                    className="w-full h-auto py-4 px-4 border-2 border-primary/20 hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <MapPin className="w-4 h-4" />
+                      <span className="text-sm font-semibold">{city.name}</span>
+                    </div>
+                  </Button>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Bairros de Curitiba */}
+          <div>
+            <h3 className="text-2xl font-bold text-gray-800 mb-8 text-center">
+              Bairros de Curitiba
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 max-w-7xl mx-auto">
+              {getAllNeighborhoods().map((neighborhood) => (
+                <Link
+                  key={neighborhood.slug}
+                  to={`/${neighborhood.slug}`}
+                  className="group"
+                >
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full py-3 px-3 border border-green-200 hover:border-green-500 hover:bg-green-500 hover:text-white transition-all duration-300 group-hover:scale-105"
+                  >
+                    <span className="text-xs font-medium">{neighborhood.name}</span>
+                  </Button>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-gray-600 mb-6">
+              Não encontrou sua cidade ou bairro? Entre em contato conosco!
+            </p>
+            <Button 
+              size="lg"
+              className="bg-whatsapp hover:bg-whatsapp/90 text-white shadow-xl"
+              asChild
+            >
+              <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="w-5 h-5 mr-2" />
+                Consultar Atendimento
               </a>
             </Button>
           </div>
